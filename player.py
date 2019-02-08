@@ -10,8 +10,8 @@ class Player:
 'orbits': 0, 
 'in_action': 3, 
 'bet_index': 2, 
-'current_buy_in': 
-4, 'round': 0, 
+'current_buy_in': 4, 
+'round': 0, 
 'players': [{'id': 0, 'bet': 0, 'version': 'Pony 1.0.0', 'time_used': 0, 'stack': 1000, 'status': 'active', 'name': 'Bright Pony'}, 
             {'id': 1, 'bet': 2, 'version': '1.0', 'time_used': 0, 'stack': 998, 'status': 'active', 'name': 'PokerMasters'}, 
             {'id': 2, 'bet': 4, 'version': 'ERROR: Unreachable', 'time_used': 0, 'stack': 996, 'status': 'active', 'name': 'NADagascar'}, 
@@ -42,13 +42,17 @@ class Player:
     def betRequest(self, game_state):
         try:
             high_ranks = ['J', 'Q', 'K', 'A']
+            current_buy_in = game_state['current_buy_in']
             for player in game_state['players']:
                 if player['name'] == 'TheEmpireDidNothingWrong':
                     my_stack = player['stack']
-                    cards = player['hole_cards']
-                    for card in cards:
+                    my_cards = player['hole_cards']
+                    for card in my_cards:
                         if card['rank'] in high_ranks:
-                            return my_stack
+                            if current_buy_in > my_stack:
+                                return my_stack
+                            else:
+                                return current_buy_in + 10
             return 500
 
         except:
