@@ -82,8 +82,6 @@ class Player:
                     for high_card in my_high_cards:
                         if self.is_there_pair_with_community_deck(high_card, community_cards):
                             our_bet = current_buy_in
-                    if our_bet == 0:
-                        our_bet = self.handle_high_ranks(current_buy_in, high_ranks, my_ranks, my_stack)
 
                 # checking if our ranks are close
                 #elif abs(ranks[my_ranks[0]] - ranks[my_ranks[1]]) <= still_close:
