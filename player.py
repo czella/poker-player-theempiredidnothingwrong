@@ -1,3 +1,4 @@
+import os
 import sys
 import math
 
@@ -72,8 +73,8 @@ class Player:
                 our_bet = self.handle_high_ranks(current_buy_in, high_ranks, my_ranks, my_stack)
 
             # checking if our ranks are close
-            elif abs(ranks[my_ranks[0]] - ranks[my_ranks[1]]) <= still_close:
-                our_bet = self.handle_close_ranks(current_buy_in, my_stack)
+            #elif abs(ranks[my_ranks[0]] - ranks[my_ranks[1]]) <= still_close:
+                #our_bet = self.handle_close_ranks(current_buy_in, my_stack)
 
             # checking if all community cards are dealt
             elif community_cards is not None and len(community_cards) == 5:
@@ -82,7 +83,13 @@ class Player:
 
         except Exception as e:
             our_bet = 0
+
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+
             sys.stdout.write(str(e) + "\n")
+            # print call stack
+            sys.stdout.write(", ".join([exc_type, str(fname), str(exc_tb.tb_lineno)]) + "\n")
             sys.stdout.write("Bet calculated based on caught exception: " + str(our_bet) + "\n")
 
         # log state
@@ -101,7 +108,7 @@ class Player:
             our_bet = min(my_stack, current_buy_in)
             sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet) + "\n")
         else:
-            if current_buy_in < 100:
+            if False:
                 our_bet = current_buy_in
                 sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet) + "\n")
             else:
