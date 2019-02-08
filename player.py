@@ -60,9 +60,9 @@ class Player:
             my_stack = int(my_player['stack'])
             my_cards = my_player['hole_cards']
 
-            # checking if we have a pair
+            # checking if we have a high rank pair
             my_ranks = [card['rank'] for card in my_cards]
-            if my_ranks[0] == my_ranks[1]:
+            if my_ranks[0] == my_ranks[1] and my_ranks[0] in high_ranks:
                 our_bet = my_stack
                 sys.stdout.write("Bet calculated based on PAIR: " + str(our_bet) + "\n")
 
