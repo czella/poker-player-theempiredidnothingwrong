@@ -111,6 +111,9 @@ class Player:
                 elif community_cards is not None and len(community_cards) >= 4:
                     our_bet = current_buy_in
                     sys.stdout.write("Bet calculated based on ALL CARDS ON TABLE: " + str(our_bet) + "\n")
+
+                else:
+                    sys.stdout.write("We don't have any high ranks I guess :/")
             else:
                 our_bet = 0
                 sys.stdout.write("Too many players for us :( \n")
