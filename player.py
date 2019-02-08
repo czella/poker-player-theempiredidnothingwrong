@@ -123,7 +123,7 @@ class Player:
 
             sys.stdout.write(str(e) + "\n")
             # print call stack
-            sys.stdout.write(", ".join([exc_type, str(fname), str(exc_tb.tb_lineno)]) + "\n")
+            sys.stdout.write(", ".join([str(exc_type), str(fname), str(exc_tb.tb_lineno)]) + "\n")
             sys.stdout.write("Bet calculated based on caught exception: " + str(our_bet) + "\n")
 
         # log state
