@@ -67,7 +67,9 @@ class Player:
             all_cards = my_cards + community_cards
             my_ranks = [card['rank'] for card in my_cards]
             all_ranks = [card['rank'] for card in all_cards]
-            suit_frequencies = self.get_suit_frequencies(all_cards)
+            all_suit_frequencies = self.get_suit_frequencies(all_cards)
+            hand_suit_frequencies = self.get_suit_frequencies(my_cards)
+            community_suit_frequencies = self.get_suit_frequencies(community_cards)
 
             # checking how many players there are
             if self.get_active_players(players) <= 2:
@@ -83,8 +85,13 @@ class Player:
                             our_bet = current_buy_in
 
                 # checking if there are 3 cards on the table and 4 identical suits
-                elif len(community_cards) == 3 and max(suit_frequencies.values()) >= 4:
+                elif len(community_cards) == 3 and max(all_suit_frequencies.values()) >= 4:
                     our_bet = current_buy_in + 200
+
+                #checking if flush
+                elif len(community_cards) == 5 and max(hand_suit_frequencies.values()) >= 2:
+                    if community_suit_frequencies[my_cards[0]["suit"]] >= 3:
+                        our_bet = my_stack
 
                 # checking if our ranks are close
                 #elif abs(ranks[my_ranks[0]] - ranks[my_ranks[1]]) <= still_close:
@@ -155,6 +162,7 @@ class Player:
             else:
                 freq[item['suit']] = 1
         return freq
+
 
     def get_active_players(self, players):
         active_players = [player for player in players if player['status'] == 'active']

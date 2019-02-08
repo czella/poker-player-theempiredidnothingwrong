@@ -1,7 +1,7 @@
 import player
 import json
 
-testJSon_one_high = json.loads("""{"community_cards": [],
+testJSon_one_high = json.loads("""{"community_cards": [{"suit": "hearts", "rank": "4"},{"suit": "hearts", "rank": "4"},{"suit": "hearts", "rank": "4"}],
 "minimum_raise": 2, 
 "big_blind": 4, 
 "orbits": 0, 
