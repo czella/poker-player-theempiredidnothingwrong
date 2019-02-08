@@ -52,9 +52,10 @@ class Player:
         players = game_state['players']
         our_bet = 0
         still_close = 2
-        sys.stdout.write("Initializing")
+        sys.stdout.write("Initialized round\n")
 
         try:
+            sys.stdout.write("Inside try statement\n")
             # searching for our player
             my_player = dict()
             for player in players:
