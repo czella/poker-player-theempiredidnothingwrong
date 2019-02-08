@@ -71,6 +71,10 @@ class Player:
                                 our_bet = my_stack
                             else:
                                 our_bet = current_buy_in + 10
+                        elif my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
+                            if current_buy_in < 100:
+                                our_bet = current_buy_in + 10
+
         except:
             our_bet = 0
         sys.stdout.write("_______ BET CALCULATED ______")
