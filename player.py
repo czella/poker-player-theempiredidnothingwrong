@@ -2,7 +2,7 @@ import sys
 import math
 
 class Player:
-    VERSION = "DS.2.1.0"
+    VERSION = "DS.2.2.0"
     testJSon = """{'community_cards': [], 
 'minimum_raise': 2, 
 'big_blind': 4, 
