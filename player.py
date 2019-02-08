@@ -82,7 +82,7 @@ class Player:
                     #our_bet = self.handle_close_ranks(current_buy_in, my_stack)
 
                 # checking if all community cards are dealt
-                elif community_cards is not None and len(community_cards) == 5:
+                elif community_cards is not None and len(community_cards) >= 4:
                     our_bet = current_buy_in
                     sys.stdout.write("Bet calculated based on ALL CARDS ON TABLE: " + str(our_bet) + "\n")
 
