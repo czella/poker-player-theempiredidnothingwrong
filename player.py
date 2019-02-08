@@ -59,7 +59,7 @@ class Player:
 
             # getting our data
             my_stack = int(my_player['stack'])
-            my_cards = my_player['hole_cards']
+            my_cards = my_player['hole_cards'] + community_cards
 
             # checking if we have a high rank pair
             my_ranks = [card['rank'] for card in my_cards]
@@ -91,17 +91,17 @@ class Player:
         return our_bet
 
     def handle_close_ranks(self, current_buy_in, minimum_raise, my_stack):
-        our_bet = min(my_stack, current_buy_in + minimum_raise)
+        our_bet = min(my_stack, current_buy_in)
         sys.stdout.write("Bet calculated based on CLOSE RANKS: " + str(our_bet) + "\n")
         return our_bet
 
     def handle_high_ranks(self, current_buy_in, high_ranks, minimum_raise, my_ranks, my_stack):
         if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
-            our_bet = min(my_stack, current_buy_in + minimum_raise)
+            our_bet = min(my_stack, current_buy_in)
             sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet) + "\n")
         else:
             if current_buy_in < 100:
-                our_bet = current_buy_in + minimum_raise
+                our_bet = current_buy_in
                 sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet) + "\n")
         return our_bet
 
