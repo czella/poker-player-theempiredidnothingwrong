@@ -11,10 +11,11 @@ class Player:
             high_ranks = ['J', 'Q', 'K', 'A']
             for i in game_state['players']:
                 if i['name'] == 'TheEmpireDidNothingWrong':
+                    my_stack = i['stack']
                     cards = i['hole_cards']
                     for card in cards:
                         if card['rank'] in high_ranks:
-                            return 1000
+                            return my_stack
 
             stdout(game_state)
             stdout(game_state['players'])
