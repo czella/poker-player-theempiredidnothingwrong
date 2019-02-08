@@ -74,7 +74,7 @@ class Player:
             community_suit_frequencies = self.get_suit_frequencies(community_cards)
 
             # checking how many players there are
-            if self.get_active_players(players) <= 2:
+            if self.get_active_players(players) <= 6:
 
                 # checking if we have a high rank pair
                 if my_ranks[0] == my_ranks[1] and my_ranks[0] in high_ranks:
