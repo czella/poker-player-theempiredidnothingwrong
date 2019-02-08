@@ -1,4 +1,5 @@
 import sys
+import math
 
 class Player:
     VERSION = "DS.2.1.0"
@@ -75,7 +76,7 @@ class Player:
                     # checking if our ranks are close
                     elif abs(my_ranks[0] - my_ranks[1]) <= still_close:
                         if my_stack <= current_buy_in * 1.15:
-                            our_bet = current_buy_in * 1.15
+                            our_bet = math.ceil(current_buy_in * 1.15)
                             sys.stdout.write("Bet calculated based on CLOSE RANKS: " + str(our_bet))
                         else:
                             our_bet = my_stack
