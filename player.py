@@ -105,7 +105,7 @@ class Player:
 
     def handle_high_ranks(self, current_buy_in, high_ranks, my_ranks, my_stack):
         if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
-            our_bet = min(my_stack, current_buy_in)
+            our_bet = max(min(my_stack, current_buy_in), 200)
             sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet) + "\n")
         else:
             if False:
@@ -125,6 +125,15 @@ class Player:
 
     def is_there_drill(self, my_cards):
         pass
+
+    def get_frequencies(self, list_of_cards):
+        freq = dict()
+        for item in list_of_cards:
+            if item in freq:
+                freq[item] += 1
+            else:
+                freq[item] = 1
+        return freq
 
     def showdown(self, game_state):
         pass
