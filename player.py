@@ -64,6 +64,8 @@ class Player:
             my_stack = int(my_player['stack'])
             my_cards = my_player['hole_cards']
             my_high_cards = [card for card in my_cards if card['rank'] in high_ranks]
+            print("my high cards ::::")
+            print(my_high_cards)
             all_cards = my_cards + community_cards
             my_ranks = [card['rank'] for card in my_cards]
             all_ranks = [card['rank'] for card in all_cards]
@@ -82,7 +84,15 @@ class Player:
                 elif len(my_high_cards) > 0:
                     for high_card in my_high_cards:
                         if self.is_there_pair_with_community_deck(high_card, community_cards):
-                            our_bet = current_buy_in
+                            if current_buy_in>my_stack:
+                                our_bet = my_stack
+                            else:
+                                our_bet = current_buy_in
+                        elif len(my_high_cards) >= 2:
+                            if current_buy_in>my_stack:
+                                our_bet = my_stack
+                            else:
+                                our_bet = current_buy_in
 
                 # checking if there are 3 cards on the table and 4 identical suits
                 elif len(community_cards) == 3 and max(all_suit_frequencies.values()) >= 4:
@@ -129,7 +139,7 @@ class Player:
 
     def handle_high_ranks(self, current_buy_in, high_ranks, my_ranks, my_stack):
         if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
-            our_bet = min(min(my_stack, current_buy_in), 200)
+            our_bet = min(min(my_stack, current_buy_in), my_stack)
             sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet) + "\n")
         else:
             if False:
