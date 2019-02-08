@@ -4,7 +4,7 @@ import math
 
 
 class Player:
-    VERSION = "DS.4.3.0"
+    VERSION = "DS.5.1.0"
     testJSon = """{'community_cards': [], 
 'minimum_raise': 2, 
 'big_blind': 4, 
@@ -70,7 +70,7 @@ class Player:
             suit_frequencies = self.get_suit_frequencies(all_cards)
 
             # checking how many players there are
-            if self.get_active_players(players) <= 3:
+            if self.get_active_players(players) <= 5:
 
                 # checking if we have a high rank pair
                 if my_ranks[0] == my_ranks[1] and my_ranks[0] in high_ranks:
