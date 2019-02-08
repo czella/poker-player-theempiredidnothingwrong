@@ -50,9 +50,14 @@ class Player:
                     # getting our data
                     my_stack = int(player['stack'])
                     my_cards = player['hole_cards']
-                    # checking our cards
-                    for card in my_cards:
-                        if card['rank'] in high_ranks:
+
+                    # checking if we have a pair
+                    my_ranks = [card['rank'] for card in my_cards]
+                    if my_ranks[0] == my_ranks[1]:
+                        our_bet = my_stack
+                    else:
+                        # checking if we have high ranks
+                        if my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
                             if current_buy_in + 10 > my_stack:
                                 our_bet = my_stack
                             else:
