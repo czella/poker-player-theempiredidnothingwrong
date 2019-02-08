@@ -39,9 +39,10 @@ class Player:
 
     def betRequest(self, game_state):
         sys.stdout.write("_______ WE'RE ON!!4!4 ______")
-        high_ranks = ['J', 'Q', 'K', 'A']
+        high_ranks = ['10', 'J', 'Q', 'K', 'A']
         current_buy_in = int(game_state['current_buy_in'])
         our_bet = 0
+        still_close = 2
 
         try:
             # searching for our player
@@ -55,9 +56,17 @@ class Player:
                     my_ranks = [card['rank'] for card in my_cards]
                     if my_ranks[0] == my_ranks[1]:
                         our_bet = my_stack
+
+                    # checking if our ranks are close
+                    elif abs(my_ranks[0] - my_ranks[1]) <= still_close:
+                        if my_stack <= current_buy_in * 1.15:
+                            our_bet = current_buy_in * 1.15
+                        else:
+                            our_bet = my_stack
+
+                    # checking if we have high ranks
                     else:
-                        # checking if we have high ranks
-                        if my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
+                        if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
                             if current_buy_in + 10 > my_stack:
                                 our_bet = my_stack
                             else:
