@@ -86,13 +86,20 @@ class Player:
                         if self.is_there_pair_with_community_deck(high_card, community_cards):
                             if current_buy_in>my_stack:
                                 our_bet = my_stack
+                                sys.stdout.write("ALL IN BECAUSE HIGH PAIR")
                             else:
                                 our_bet = current_buy_in
+                                sys.stdout.write("CALL BECAUSE DON'T HAVE MONEY FOR ALL IN // HIGH PAIR")
                         elif len(my_high_cards) >= 2:
                             if current_buy_in>my_stack:
                                 our_bet = my_stack
+                                sys.stdout.write("ALL IN BECAUSE BOTH CARDS ARE HIGH")
                             else:
                                 our_bet = current_buy_in
+                                sys.stdout.write("CALL BECAUSE DON'T HAVE MONEY FOR ALL IN // ONE HIGH CARD")
+                        elif len(my_high_cards) == 1:
+                            our_bet = min(current_buy_in,200)
+                            sys.stdout.write("ONE HIGH CARD RAISING 200")
 
                 # checking if there are 3 cards on the table and 4 identical suits
                 elif len(community_cards) == 3 and max(all_suit_frequencies.values()) >= 4:
