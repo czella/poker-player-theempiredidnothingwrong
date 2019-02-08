@@ -8,11 +8,20 @@ class Player:
 
     def betRequest(self, game_state):
         try:
+            high_ranks = ['J', 'Q', 'K', 'A']
+            for i in game_state['players']:
+                if i['name'] == 'TheEmpireDidNothingWrong':
+                    cards = i['hole_cards']
+                    for card in cards:
+                        if card['rank'] in high_ranks:
+                            return 1000
+
             stdout(game_state)
             stdout(game_state['players'])
-            return 1000
+            return 500
+
         except:
-            return 1000
+            return 0
 
     def showdown(self, game_state):
         pass
