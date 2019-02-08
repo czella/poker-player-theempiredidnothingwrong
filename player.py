@@ -45,41 +45,46 @@ class Player:
         sys.stdout.write(str(game_state) + "\n")
         ranks = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8,
                  '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}
-        high_ranks = ['10', 'J', 'Q', 'K', 'A']
+        high_ranks = ['J', 'Q', 'K', 'A']
         current_buy_in = int(game_state['current_buy_in'])
         minimum_raise = int(game_state['minimum_raise'])
         community_cards = game_state['community_cards'] if 'community_cards' in game_state else None
+        players = game_state['players']
         our_bet = 0
         still_close = 2
 
         try:
             # searching for our player
             my_player = dict()
-            for player in game_state['players']:
+            for player in players:
                 if player['name'] == 'TheEmpireDidNothingWrong':
                     my_player = player
 
             # getting our data
             my_stack = int(my_player['stack'])
-            my_cards = my_player['hole_cards'] + community_cards
-
-            # checking if we have a high rank pair
+            my_cards = my_player['hole_cards']
+            all_cards = my_cards + community_cards
             my_ranks = [card['rank'] for card in my_cards]
-            if my_ranks[0] == my_ranks[1] and my_ranks[0] in high_ranks:
-                our_bet = self.handle_high_rank_pair(my_stack)
 
-            # checking if we have high ranks
-            elif my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
-                our_bet = self.handle_high_ranks(current_buy_in, high_ranks, my_ranks, my_stack)
+            # checking how many players there are
+            if self.get_active_players(players) <= 3:
 
-            # checking if our ranks are close
-            #elif abs(ranks[my_ranks[0]] - ranks[my_ranks[1]]) <= still_close:
-                #our_bet = self.handle_close_ranks(current_buy_in, my_stack)
+                # checking if we have a high rank pair
+                if my_ranks[0] == my_ranks[1] and my_ranks[0] in high_ranks:
+                    our_bet = self.handle_high_rank_pair(my_stack)
 
-            # checking if all community cards are dealt
-            elif community_cards is not None and len(community_cards) == 5:
-                our_bet = current_buy_in
-                sys.stdout.write("Bet calculated based on ALL CARDS ON TABLE: " + str(our_bet) + "\n")
+                # checking if we have high ranks
+                elif my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
+                    our_bet = self.handle_high_ranks(current_buy_in, high_ranks, my_ranks, my_stack)
+
+                # checking if our ranks are close
+                #elif abs(ranks[my_ranks[0]] - ranks[my_ranks[1]]) <= still_close:
+                    #our_bet = self.handle_close_ranks(current_buy_in, my_stack)
+
+                # checking if all community cards are dealt
+                elif community_cards is not None and len(community_cards) == 5:
+                    our_bet = current_buy_in
+                    sys.stdout.write("Bet calculated based on ALL CARDS ON TABLE: " + str(our_bet) + "\n")
 
         except Exception as e:
             our_bet = 0
@@ -138,6 +143,10 @@ class Player:
             else:
                 freq[item] = 1
         return freq
+
+    def get_active_players(self, players):
+        active_players = [player for player in players if player['status'] == 'active']
+        return len(active_players)
 
     def showdown(self, game_state):
         pass
