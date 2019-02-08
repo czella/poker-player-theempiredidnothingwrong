@@ -1,6 +1,7 @@
+import sys
 
 class Player:
-    VERSION = "DS.1.0.0"
+    VERSION = "DS.2.1.0"
     testJSon = """{'community_cards': [], 
 'minimum_raise': 2, 
 'big_blind': 4, 
@@ -37,21 +38,24 @@ class Player:
     """
 
     def betRequest(self, game_state):
+        sys.stdout("_______ WE'RE ON!!4!4 ______")
         try:
             high_ranks = ['J', 'Q', 'K', 'A']
             current_buy_in = game_state['current_buy_in']
+
+            # searching for our player
             for player in game_state['players']:
                 if player['name'] == 'TheEmpireDidNothingWrong':
+                    # getting our data
                     my_stack = player['stack']
                     my_cards = player['hole_cards']
+                    # checking our cards
                     for card in my_cards:
                         if card['rank'] in high_ranks:
-                            if current_buy_in > my_stack:
+                            if current_buy_in + 10 > my_stack:
                                 return my_stack
                             else:
                                 return current_buy_in + 10
-            return 500
-
         except:
             return 0
 
