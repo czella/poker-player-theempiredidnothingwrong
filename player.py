@@ -4,7 +4,7 @@ import math
 
 
 class Player:
-    VERSION = "DS.5.2.0"
+    VERSION = "DS.5.6.0"
     testJSon = """{'community_cards': [], 
 'minimum_raise': 2, 
 'big_blind': 4, 
@@ -52,6 +52,7 @@ class Player:
         players = game_state['players']
         our_bet = 0
         still_close = 2
+        sys.stdout.write("Initializing")
 
         try:
             # searching for our player
