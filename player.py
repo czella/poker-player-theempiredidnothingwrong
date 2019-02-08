@@ -1,10 +1,7 @@
-from sys import stdout
-
 
 class Player:
     VERSION = "DS.1.0.0"
-    testJSon =
-    """{'community_cards': [], 
+    testJSon = """{'community_cards': [], 
 'minimum_raise': 2, 
 'big_blind': 4, 
 'orbits': 0, 
