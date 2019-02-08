@@ -4,7 +4,7 @@ import math
 
 
 class Player:
-    VERSION = "DS.5.1.0"
+    VERSION = "DS.5.2.0"
     testJSon = """{'community_cards': [], 
 'minimum_raise': 2, 
 'big_blind': 4, 
@@ -130,6 +130,7 @@ class Player:
                 sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet) + "\n")
             else:
                 our_bet = 0
+                sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet) + "\n")
         return our_bet
 
     def handle_high_rank_pair(self, cards, my_stack):
