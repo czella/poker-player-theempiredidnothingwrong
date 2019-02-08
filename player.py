@@ -40,6 +40,7 @@ class Player:
 
     def betRequest(self, game_state):
         sys.stdout.write("_______ WE'RE ON!!4!4 ______" + "\n")
+        sys.stdout.write(str(game_state) + "\n")
         ranks = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8,
                  '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}
         high_ranks = ['10', 'J', 'Q', 'K', 'A']
