@@ -56,32 +56,34 @@ class Player:
                     my_ranks = [card['rank'] for card in my_cards]
                     if my_ranks[0] == my_ranks[1]:
                         our_bet = my_stack
-                        sys.stdout.write("Bet calculated based on PAIR: " + our_bet)
+                        sys.stdout.write("Bet calculated based on PAIR: " + str(our_bet))
 
                     # checking if we have high ranks
                     elif my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
                         if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
                             if current_buy_in + 10 > my_stack:
                                 our_bet = my_stack
-                                sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + our_bet)
+                                sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet))
                             else:
                                 our_bet = current_buy_in + 10
+                                sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet))
                         else:
                             if current_buy_in < 100:
                                 our_bet = current_buy_in + 10
-                                sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + our_bet)
+                                sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet))
 
                     # checking if our ranks are close
                     elif abs(my_ranks[0] - my_ranks[1]) <= still_close:
                         if my_stack <= current_buy_in * 1.15:
                             our_bet = current_buy_in * 1.15
-                            sys.stdout.write("Bet calculated based on CLOSE RANKS: " + our_bet)
+                            sys.stdout.write("Bet calculated based on CLOSE RANKS: " + str(our_bet))
                         else:
                             our_bet = my_stack
         except:
             our_bet = 0
-            sys.stdout.write("Bet calculated based on caught exception: " + our_bet)
-        sys.stdout.write("Our bet: " + our_bet)
+            sys.stdout.write("Bet calculated based on caught exception: " + str(our_bet))
+        sys.stdout.write("Our bet: " + str(our_bet))
+        sys.stdout.write("Bet value type: " + str(type(our_bet)))
         return our_bet
 
     def showdown(self, game_state):
