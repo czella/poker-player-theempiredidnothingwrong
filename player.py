@@ -67,6 +67,7 @@ class Player:
             all_cards = my_cards + community_cards
             my_ranks = [card['rank'] for card in my_cards]
             all_ranks = [card['rank'] for card in all_cards]
+            suit_frequencies = self.get_suit_frequencies(all_cards)
 
             # checking how many players there are
             if self.get_active_players(players) <= 3:
@@ -76,12 +77,14 @@ class Player:
                     our_bet = self.handle_high_rank_pair(all_cards, my_stack)
 
                 # checking if we have a high rank pair with one of the community cards
-
-                # checking if we have high ranks
                 elif len(my_high_cards) > 0:
                     for high_card in my_high_cards:
                         if self.is_there_pair_with_community_deck(high_card, community_cards):
                             our_bet = current_buy_in
+
+                # checking if there are 3 cards on the table and 4 identical suits
+                elif len(community_cards) == 3 and max(suit_frequencies.values()) >= 4:
+                    our_bet = current_buy_in + 200
 
                 # checking if our ranks are close
                 #elif abs(ranks[my_ranks[0]] - ranks[my_ranks[1]]) <= still_close:
@@ -143,13 +146,13 @@ class Player:
     def is_there_drill(self, my_cards):
         pass
 
-    def get_frequencies(self, list_of_cards):
+    def get_suit_frequencies(self, list_of_cards):
         freq = dict()
         for item in list_of_cards:
-            if item in freq:
-                freq[item] += 1
+            if item['suit'] in freq:
+                freq[item['suit']] += 1
             else:
-                freq[item] = 1
+                freq[item['suit']] = 1
         return freq
 
     def get_active_players(self, players):
