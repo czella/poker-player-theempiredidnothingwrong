@@ -39,7 +39,6 @@ class Player:
 
     def betRequest(self, game_state):
         sys.stdout.write("_______ WE'RE ON!!4!4 ______")
-        sys.stdout.write("_______ NEXT LINE ______")
         high_ranks = ['J', 'Q', 'K', 'A']
         current_buy_in = int(game_state['current_buy_in'])
         our_bet = 0
@@ -60,7 +59,7 @@ class Player:
                                 our_bet = current_buy_in + 10
         except:
             our_bet = 0
-
+        sys.stdout.write("_______ BET CALCULATED ______")
         return our_bet
 
     def showdown(self, game_state):
