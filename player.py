@@ -1,6 +1,6 @@
 
 class Player:
-    VERSION = "Default Python folding player"
+    VERSION = "DS.1.0.0"
 
     def betRequest(self, game_state):
         return 0
