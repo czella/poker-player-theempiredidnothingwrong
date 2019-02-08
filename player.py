@@ -46,6 +46,7 @@ class Player:
         high_ranks = ['10', 'J', 'Q', 'K', 'A']
         current_buy_in = int(game_state['current_buy_in'])
         minimum_raise = int(game_state['minimum_raise'])
+        community_cards = game_state['community_cards'] if 'community_cards' in game_state else None
         our_bet = 0
         still_close = 2
 
@@ -63,30 +64,50 @@ class Player:
             # checking if we have a high rank pair
             my_ranks = [card['rank'] for card in my_cards]
             if my_ranks[0] == my_ranks[1] and my_ranks[0] in high_ranks:
-                our_bet = my_stack
-                sys.stdout.write("Bet calculated based on PAIR: " + str(our_bet) + "\n")
+                our_bet = self.handle_high_rank_pair(my_stack)
 
             # checking if we have high ranks
             elif my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
-                if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
-                    our_bet = min(my_stack, current_buy_in + minimum_raise)
-                    sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet) + "\n")
-                else:
-                    if current_buy_in < 100:
-                        our_bet = current_buy_in + minimum_raise
-                        sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet) + "\n")
+                our_bet = self.handle_high_ranks(current_buy_in, high_ranks, minimum_raise, my_ranks, my_stack)
 
             # checking if our ranks are close
             elif abs(my_ranks[0] - my_ranks[1]) <= still_close:
-                our_bet = min(my_stack, current_buy_in + minimum_raise)
-                sys.stdout.write("Bet calculated based on CLOSE RANKS: " + str(our_bet) + "\n")
+                our_bet = self.handle_close_ranks(current_buy_in, minimum_raise, my_stack)
+
+            # checking if all community cards are dealt
+            elif community_cards is not None and len(community_cards) == 5:
+                our_bet = current_buy_in
+                sys.stdout.write("Bet calculated based on ALL CARDS ON TABLE: " + str(our_bet) + "\n")
 
         except Exception as e:
             our_bet = 0
             sys.stdout.write(str(e))
             sys.stdout.write("Bet calculated based on caught exception: " + str(our_bet) + "\n")
+
+        # log state
         sys.stdout.write("Our bet: " + str(our_bet) + "\n")
         sys.stdout.write("Bet value type: " + str(type(our_bet)) + "\n")
+
+        return our_bet
+
+    def handle_close_ranks(self, current_buy_in, minimum_raise, my_stack):
+        our_bet = min(my_stack, current_buy_in + minimum_raise)
+        sys.stdout.write("Bet calculated based on CLOSE RANKS: " + str(our_bet) + "\n")
+        return our_bet
+
+    def handle_high_ranks(self, current_buy_in, high_ranks, minimum_raise, my_ranks, my_stack):
+        if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
+            our_bet = min(my_stack, current_buy_in + minimum_raise)
+            sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet) + "\n")
+        else:
+            if current_buy_in < 100:
+                our_bet = current_buy_in + minimum_raise
+                sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet) + "\n")
+        return our_bet
+
+    def handle_high_rank_pair(self, my_stack):
+        our_bet = my_stack
+        sys.stdout.write("Bet calculated based on PAIR: " + str(our_bet) + "\n")
         return our_bet
 
     def showdown(self, game_state):
