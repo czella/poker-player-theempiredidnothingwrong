@@ -63,19 +63,27 @@ class Player:
             # getting our data
             my_stack = int(my_player['stack'])
             my_cards = my_player['hole_cards']
+            my_high_cards = [card for card in my_cards if card['rank'] in high_ranks]
             all_cards = my_cards + community_cards
             my_ranks = [card['rank'] for card in my_cards]
+            all_ranks = [card['rank'] for card in all_cards]
 
             # checking how many players there are
             if self.get_active_players(players) <= 3:
 
                 # checking if we have a high rank pair
                 if my_ranks[0] == my_ranks[1] and my_ranks[0] in high_ranks:
-                    our_bet = self.handle_high_rank_pair(my_stack)
+                    our_bet = self.handle_high_rank_pair(all_cards, my_stack)
+
+                # checking if we have a high rank pair with one of the community cards
 
                 # checking if we have high ranks
-                elif my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
-                    our_bet = self.handle_high_ranks(current_buy_in, high_ranks, my_ranks, my_stack)
+                elif len(my_high_cards) > 0:
+                    for high_card in my_high_cards:
+                        if self.is_there_pair_with_community_deck(high_card, community_cards):
+                            our_bet = current_buy_in
+                    if our_bet == 0:
+                        our_bet = self.handle_high_ranks(current_buy_in, high_ranks, my_ranks, my_stack)
 
                 # checking if our ranks are close
                 #elif abs(ranks[my_ranks[0]] - ranks[my_ranks[1]]) <= still_close:
@@ -120,17 +128,16 @@ class Player:
                 our_bet = 0
         return our_bet
 
-    def handle_high_rank_pair(self, my_stack):
+    def handle_high_rank_pair(self, cards, my_stack):
         our_bet = my_stack
         sys.stdout.write("Bet calculated based on PAIR: " + str(our_bet) + "\n")
         return our_bet
 
-    def is_there_poker(self, my_cards):
-        freq = self.get_frequencies(self, my_cards)
-        if 4 in freq.values():
-            return True
-        else:
-            return False
+    def is_there_pair_with_community_deck(self, my_high_card, community_cards):
+        for community_card in community_cards:
+            if my_high_card['rank'] == community_card['rank']:
+                return True
+        return False
 
     def is_there_drill(self, my_cards):
         pass
