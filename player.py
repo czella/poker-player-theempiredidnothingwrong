@@ -39,6 +39,7 @@ class Player:
 
     def betRequest(self, game_state):
         sys.stdout("_______ WE'RE ON!!4!4 ______")
+        sys.stdout("_______ NEXT LINE ______")
         high_ranks = ['J', 'Q', 'K', 'A']
         current_buy_in = int(game_state['current_buy_in'])
         our_bet = 0
