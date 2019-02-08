@@ -37,5 +37,5 @@ testJSon = json.loads("""{"community_cards": [],
     """)
 
 if __name__ == "__main__":
-    player = player.Player();
+    player = player.Player()
     print(player.betRequest(testJSon))
