@@ -1,6 +1,7 @@
 import sys
 import math
 
+
 class Player:
     VERSION = "DS.2.2.0"
     testJSon = """{'community_cards': [], 
@@ -103,6 +104,8 @@ class Player:
             if current_buy_in < 100:
                 our_bet = current_buy_in
                 sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet) + "\n")
+            else:
+                our_bet = 0
         return our_bet
 
     def handle_high_rank_pair(self, my_stack):
@@ -111,6 +114,9 @@ class Player:
         return our_bet
 
     def is_there_poker(self, my_cards):
+        pass
+
+    def is_there_drill(self, my_cards):
         pass
 
     def showdown(self, game_state):
