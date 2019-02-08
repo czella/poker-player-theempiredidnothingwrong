@@ -121,7 +121,11 @@ class Player:
         return our_bet
 
     def is_there_poker(self, my_cards):
-        pass
+        freq = self.get_frequencies(self, my_cards)
+        if 4 in freq.values():
+            return True
+        else:
+            return False
 
     def is_there_drill(self, my_cards):
         pass
