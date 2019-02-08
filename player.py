@@ -105,7 +105,7 @@ class Player:
 
     def handle_high_ranks(self, current_buy_in, high_ranks, my_ranks, my_stack):
         if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
-            our_bet = max(min(my_stack, current_buy_in), 200)
+            our_bet = min(min(my_stack, current_buy_in), 200)
             sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet) + "\n")
         else:
             if False:
