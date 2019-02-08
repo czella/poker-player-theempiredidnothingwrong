@@ -40,48 +40,49 @@ class Player:
 
     def betRequest(self, game_state):
         sys.stdout.write("_______ WE'RE ON!!4!4 ______")
+        ranks = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8,
+                 '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}
         high_ranks = ['10', 'J', 'Q', 'K', 'A']
         current_buy_in = int(game_state['current_buy_in'])
+        minimum_raise = int(game_state['minimum_raise'])
         our_bet = 0
         still_close = 2
 
         try:
             # searching for our player
+            my_player = dict()
             for player in game_state['players']:
                 if player['name'] == 'TheEmpireDidNothingWrong':
-                    # getting our data
-                    my_stack = int(player['stack'])
-                    my_cards = player['hole_cards']
+                    my_player = player
 
-                    # checking if we have a pair
-                    my_ranks = [card['rank'] for card in my_cards]
-                    if my_ranks[0] == my_ranks[1]:
-                        our_bet = my_stack
-                        sys.stdout.write("Bet calculated based on PAIR: " + str(our_bet))
+            # getting our data
+            my_stack = int(my_player['stack'])
+            my_cards = my_player['hole_cards']
 
-                    # checking if we have high ranks
-                    elif my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
-                        if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
-                            if current_buy_in + 10 > my_stack:
-                                our_bet = my_stack
-                                sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet))
-                            else:
-                                our_bet = current_buy_in + 10
-                                sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet))
-                        else:
-                            if current_buy_in < 100:
-                                our_bet = current_buy_in + 10
-                                sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet))
+            # checking if we have a pair
+            my_ranks = [card['rank'] for card in my_cards]
+            if my_ranks[0] == my_ranks[1]:
+                our_bet = my_stack
+                sys.stdout.write("Bet calculated based on PAIR: " + str(our_bet))
 
-                    # checking if our ranks are close
-                    elif abs(my_ranks[0] - my_ranks[1]) <= still_close:
-                        if my_stack <= current_buy_in * 1.15:
-                            our_bet = math.ceil(current_buy_in * 1.15)
-                            sys.stdout.write("Bet calculated based on CLOSE RANKS: " + str(our_bet))
-                        else:
-                            our_bet = my_stack
-        except:
+            # checking if we have high ranks
+            elif my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
+                if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
+                    our_bet = min(my_stack, current_buy_in + minimum_raise)
+                    sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet))
+                else:
+                    if current_buy_in < 100:
+                        our_bet = current_buy_in + minimum_raise
+                        sys.stdout.write("Bet calculated based on ONE HIGH RANK: " + str(our_bet))
+
+            # checking if our ranks are close
+            elif abs(my_ranks[0] - my_ranks[1]) <= still_close:
+                our_bet = min(my_stack, current_buy_in + minimum_raise)
+                sys.stdout.write("Bet calculated based on CLOSE RANKS: " + str(our_bet))
+
+        except Exception as e:
             our_bet = 0
+            sys.stdout.write(str(e))
             sys.stdout.write("Bet calculated based on caught exception: " + str(our_bet))
         sys.stdout.write("Our bet: " + str(our_bet))
         sys.stdout.write("Bet value type: " + str(type(our_bet)))
