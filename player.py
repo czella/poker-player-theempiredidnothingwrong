@@ -64,8 +64,6 @@ class Player:
             my_stack = int(my_player['stack'])
             my_cards = my_player['hole_cards']
             my_high_cards = [card for card in my_cards if card['rank'] in high_ranks]
-            print("my high cards ::::")
-            print(my_high_cards)
             all_cards = my_cards + community_cards
             my_ranks = [card['rank'] for card in my_cards]
             all_ranks = [card['rank'] for card in all_cards]
