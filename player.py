@@ -68,11 +68,11 @@ class Player:
 
             # checking if we have high ranks
             elif my_ranks[0] in high_ranks or my_ranks[1] in high_ranks:
-                our_bet = self.handle_high_ranks(current_buy_in, high_ranks, minimum_raise, my_ranks, my_stack)
+                our_bet = self.handle_high_ranks(current_buy_in, high_ranks, my_ranks, my_stack)
 
             # checking if our ranks are close
-            elif abs(my_ranks[0] - my_ranks[1]) <= still_close:
-                our_bet = self.handle_close_ranks(current_buy_in, minimum_raise, my_stack)
+            elif abs(ranks[my_ranks[0]] - ranks[my_ranks[1]]) <= still_close:
+                our_bet = self.handle_close_ranks(current_buy_in, my_stack)
 
             # checking if all community cards are dealt
             elif community_cards is not None and len(community_cards) == 5:
@@ -81,7 +81,7 @@ class Player:
 
         except Exception as e:
             our_bet = 0
-            sys.stdout.write(str(e))
+            sys.stdout.write(str(e) + "\n")
             sys.stdout.write("Bet calculated based on caught exception: " + str(our_bet) + "\n")
 
         # log state
@@ -90,12 +90,12 @@ class Player:
 
         return our_bet
 
-    def handle_close_ranks(self, current_buy_in, minimum_raise, my_stack):
+    def handle_close_ranks(self, current_buy_in, my_stack):
         our_bet = min(my_stack, current_buy_in)
         sys.stdout.write("Bet calculated based on CLOSE RANKS: " + str(our_bet) + "\n")
         return our_bet
 
-    def handle_high_ranks(self, current_buy_in, high_ranks, minimum_raise, my_ranks, my_stack):
+    def handle_high_ranks(self, current_buy_in, high_ranks, my_ranks, my_stack):
         if my_ranks[0] in high_ranks and my_ranks[1] in high_ranks:
             our_bet = min(my_stack, current_buy_in)
             sys.stdout.write("Bet calculated based on TWO HIGH RANKS: " + str(our_bet) + "\n")
@@ -109,6 +109,9 @@ class Player:
         our_bet = my_stack
         sys.stdout.write("Bet calculated based on PAIR: " + str(our_bet) + "\n")
         return our_bet
+
+    def is_there_poker(self, my_cards):
+        pass
 
     def showdown(self, game_state):
         pass
