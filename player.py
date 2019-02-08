@@ -97,9 +97,6 @@ class Player:
                             else:
                                 our_bet = current_buy_in
                                 sys.stdout.write("CALL BECAUSE DON'T HAVE MONEY FOR ALL IN // ONE HIGH CARD")
-                        elif len(my_high_cards) == 1:
-                            our_bet = min(current_buy_in,200)
-                            sys.stdout.write("ONE HIGH CARD RAISING 200")
 
                 # checking if there are 3 cards on the table and 4 identical suits
                 elif len(community_cards) == 3 and max(all_suit_frequencies.values()) >= 4:
