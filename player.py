@@ -113,7 +113,7 @@ class Player:
                     sys.stdout.write("Bet calculated based on ALL CARDS ON TABLE: " + str(our_bet) + "\n")
 
                 else:
-                    sys.stdout.write("We don't have any high ranks I guess :/")
+                    sys.stdout.write("We don't have good enough cards :/")
             else:
                 our_bet = 0
                 sys.stdout.write("Too many players for us :( \n")
